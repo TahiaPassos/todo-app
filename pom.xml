@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.stefanini</groupId>
 	<artifactId>to-do</artifactId>
-	<version>1.0.2-SNAPSHOT</version>
+	<version>1.0.3-SNAPSHOT</version>
 	<name>to-do</name>
 	<description>API para criação de lista de tarefas</description>
 	<url/>
