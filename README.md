@@ -75,3 +75,16 @@ Lembre-se que para refletir as alterações das funcionalidades é necessário c
   PUT /api/tarefas/{id}
   DELETE /api/tarefas/{id}
    ```
+
+### Script utilizado para a criação do banco de dados
+
+``` sql
+CREATE TABLE tb_tarefas (
+    id INT IDENTITY(1,1) PRIMARY KEY,
+    titulo NVARCHAR(100) NOT NULL,
+    descricao NVARCHAR(500),
+    data_criacao DATETIME2 DEFAULT SYSDATETIME(),
+    status NVARCHAR(20) DEFAULT 'PENDENTE'
+```
+);
+
