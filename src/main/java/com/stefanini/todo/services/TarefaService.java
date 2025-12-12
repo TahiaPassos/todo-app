@@ -15,7 +15,7 @@ public class TarefaService {
 
     @Transactional
     public Tarefa criarTarefa(Tarefa tarefa) {
-        // Validação manual básica
+
         if (tarefa.getTitulo() == null || tarefa.getTitulo().trim().isEmpty()) {
             throw new IllegalArgumentException("O título da tarefa é obrigatório");
         }
@@ -44,7 +44,6 @@ public class TarefaService {
     public Tarefa atualizarTarefa(Integer id, Tarefa tarefaAtualizada) {
         Tarefa tarefaExistente = buscarTarefaPorId(id);
 
-        // Validação do título
         if (tarefaAtualizada.getTitulo() != null) {
             if (tarefaAtualizada.getTitulo().trim().isEmpty()) {
                 throw new IllegalArgumentException("O título da tarefa não pode ser vazio");
@@ -55,7 +54,6 @@ public class TarefaService {
             tarefaExistente.setTitulo(tarefaAtualizada.getTitulo());
         }
 
-        // Validação da descrição
         if (tarefaAtualizada.getDescricao() != null) {
             if (tarefaAtualizada.getDescricao().length() > 500) {
                 throw new IllegalArgumentException("A descrição não pode ter mais de 500 caracteres");
@@ -63,9 +61,16 @@ public class TarefaService {
             tarefaExistente.setDescricao(tarefaAtualizada.getDescricao());
         }
 
-        // Atualiza status se fornecido
         if (tarefaAtualizada.getStatus() != null) {
-            tarefaExistente.setStatus(tarefaAtualizada.getStatus());
+            try {
+                Tarefa.StatusTarefa status = tarefaAtualizada.getStatus();
+
+                Tarefa.StatusTarefa.valueOf(status.name());
+
+                tarefaExistente.setStatus(status);
+            } catch (IllegalArgumentException e) {
+                throw new IllegalArgumentException("Status inválido. Valores permitidos: PENDENTE, EM_ANDAMENTO, CONCLUIDA");
+            }
         }
 
         return tarefaRepository.save(tarefaExistente);
@@ -77,10 +82,6 @@ public class TarefaService {
             throw new IllegalArgumentException("Tarefa não encontrada com ID: " + id);
         }
         tarefaRepository.deleteById(id);
-    }
-
-    public List<Tarefa> listarTarefasPorStatus(Tarefa.StatusTarefa status) {
-        return tarefaRepository.findByStatus(status);
     }
 
     public List<Tarefa> buscarTarefasPorTitulo(String titulo) {

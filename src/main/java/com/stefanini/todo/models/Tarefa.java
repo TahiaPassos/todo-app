@@ -74,7 +74,6 @@ public class Tarefa {
         this.status = status;
     }
 
-    // Callbacks do JPA
     @PrePersist
     protected void onCreate() {
         dataCriacao = LocalDateTime.now();
@@ -83,16 +82,12 @@ public class Tarefa {
         }
     }
 
-
-
-    // Enum Status
     public enum StatusTarefa {
         PENDENTE,
         EM_ANDAMENTO,
         CONCLUIDA
     }
 
-    // equals e hashCode
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

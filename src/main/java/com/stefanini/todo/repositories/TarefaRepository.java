@@ -9,9 +9,7 @@ import java.util.List;
 @Repository
 public interface TarefaRepository extends JpaRepository<Tarefa, Integer> {
 
-    List<Tarefa> findByStatus(Tarefa.StatusTarefa status);
-
-    List<Tarefa> findByTituloContainingIgnoreCase(String titulo);
+   List<Tarefa> findByTituloContainingIgnoreCase(String titulo);
 
     List<Tarefa> findAllByOrderByDataCriacaoDesc();
 }

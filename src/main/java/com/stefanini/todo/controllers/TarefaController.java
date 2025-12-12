@@ -18,7 +18,7 @@ import java.util.List;
         private TarefaService tarefaService;
 
         @PostMapping
-        public ResponseEntity<?> criarTarefa(@RequestBody Tarefa tarefa) {
+        public ResponseEntity<Object> criarTarefa(@RequestBody Tarefa tarefa) {
             try {
                 Tarefa novaTarefa = tarefaService.criarTarefa(tarefa);
                 return ResponseEntity.status(HttpStatus.CREATED).body(novaTarefa);
@@ -34,19 +34,13 @@ import java.util.List;
         }
 
         @GetMapping("/{id}")
-        public ResponseEntity<?> buscarTarefaPorId(@PathVariable Integer id) {
+        public ResponseEntity<Object> buscarTarefaPorId(@PathVariable Integer id) {
             try {
                 Tarefa tarefa = tarefaService.buscarTarefaPorId(id);
                 return ResponseEntity.ok(tarefa);
             } catch (IllegalArgumentException e) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
             }
-        }
-
-        @GetMapping("/status/{status}")
-        public ResponseEntity<List<Tarefa>> listarTarefasPorStatus(@PathVariable Tarefa.StatusTarefa status) {
-            List<Tarefa> tarefas = tarefaService.listarTarefasPorStatus(status);
-            return ResponseEntity.ok(tarefas);
         }
 
         @GetMapping("/buscar")
@@ -56,7 +50,7 @@ import java.util.List;
         }
 
         @PutMapping("/{id}")
-        public ResponseEntity<?> atualizarTarefa(@PathVariable Integer id, @RequestBody Tarefa tarefa) {
+        public ResponseEntity<Object> atualizarTarefa(@PathVariable Integer id, @RequestBody Tarefa tarefa) {
             try {
                 Tarefa tarefaAtualizada = tarefaService.atualizarTarefa(id, tarefa);
                 return ResponseEntity.ok(tarefaAtualizada);
@@ -69,7 +63,7 @@ import java.util.List;
         }
 
         @DeleteMapping("/{id}")
-        public ResponseEntity<?> excluirTarefa(@PathVariable Integer id) {
+        public ResponseEntity<Object> excluirTarefa(@PathVariable Integer id) {
             try {
                 tarefaService.excluirTarefa(id);
                 return ResponseEntity.noContent().build();
